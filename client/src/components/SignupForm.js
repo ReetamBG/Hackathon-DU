@@ -8,7 +8,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        Name: "",
+        name: "",
         email: "",
         password: "",
         confirmPassword: ""

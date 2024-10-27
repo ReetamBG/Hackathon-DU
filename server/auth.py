@@ -1,28 +1,22 @@
 from flask import Blueprint, request, jsonify
 from data import users
+from database import DBHelper
 
 auth_bp = Blueprint('auth', __name__)
+db = DBHelper()    # connecting to the database
 
-# In-memory user storage (use a database in production)
-# users = []
 
 @auth_bp.route('/api/auth/signup', methods=['POST'])
 def signup():
     data = request.get_json()
+    print(data)
 
-    # Append new signup to users table
-    users.append({
-        "firstName": data['firstName'],
-        "lastName": data['lastName'],
-        "email": data['email'],
-        "password": data['password'],
-        "accountType": data.get('accountType', 'student')
-    })
+    db.signup(name=data['name'],
+              password=data['password'],
+              email=data['email'],
+              accountType=data['accountType'])
 
-    for user in users:
-        print(users)  # For debugging purposes only; remove in production
-
-    return jsonify({"message": "Account created successfully"}), 201
+    return jsonify({'message': 'Account created successfully'}), 201
 
 
 @auth_bp.route('/api/auth/login', methods=['POST'])
