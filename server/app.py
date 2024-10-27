@@ -1,46 +1,51 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__)
 CORS(app, resources={r"/*": {"origins": "*"}})
 
-users = []
-
+users = []  # This should ideally be replaced with a database
 
 @app.route('/')
 def hello():
     return 'Hello'
 
-
 @app.route('/api/auth/signup', methods=['POST'])
 def signup():
     data = request.get_json()
-    print(data)    # just to check
 
-    # Validate the incoming data
     if not data:
         return jsonify({"message": "No data received"}), 400
 
-    # append new signup to users table
+
+    # Hash the password
+    # hashed_password = generate_password_hash(data['password'])
+
+    # Append new signup to users table
     users.append({
         "firstName": data['firstName'],
         "lastName": data['lastName'],
         "email": data['email'],
-        "password": data['password'],
-        "accountType": data.get('accountType')
+        # "password": hashed_password,
+        "password" : data['password'],
+        "accountType": data.get('accountType', 'student')
     })
 
+    print(users)
     return jsonify({"message": "Account created successfully"}), 201
 
 
-@app.route('/api/auth/login/', methods=['POST'])
+@app.route('/api/auth/login', methods=['POST'])
 def login():
     data = request.get_json()
+    print(data)
+
     for user in users:
         if user['email'] == data['email'] and user['password'] == data['password']:
-            return jsonify({'User Authenticated'})
-        else:
-            return jsonify({'Either user or password or both not correct'}), 400
+            return jsonify({'message': 'User authenticated successfully'}), 200
+
+        return jsonify({'message': 'Either email or password not correct'}), 402
 
 
 if __name__ == '__main__':
