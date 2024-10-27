@@ -22,10 +22,11 @@ def signup():
 @auth_bp.route('/api/auth/login', methods=['POST'])
 def login():
     data = request.get_json()
+    print(data)
 
-    for user in users:
-        # Verify email and hashed password match
-        if user['email'] == data['email'] and user['password'] == data['password']:
-            return jsonify({'message': 'User authenticated successfully'}), 200
+    status = db.login(email=data['email'],
+                      password=data['password'])
+    if status == 1:
+        return jsonify({'message': 'User authenticated successfully'}), 200
 
     return jsonify({'message': 'Either email or password not correct'}), 402

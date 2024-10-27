@@ -22,7 +22,6 @@ class DBHelper:
             INSERT INTO users (user_id, name, email, password, user_type)
             VALUES (NULL, %s, %s, %s, %s)
             """
-
             self.cursor.execute(query, (name, email, password, accountType))
             self.conn.commit()
             print("User added successfully")
@@ -30,8 +29,20 @@ class DBHelper:
             print(f"An error occurred: {e}")
             self.conn.rollback()
 
-
-
+    def login(self, email, password):
+        try:
+            query = """
+            SELECT * FROM users WHERE email=%s && password=%s
+            """
+            self.cursor.execute(query, (email, password))
+            query_response = self.cursor.fetchone()
+            if query_response is None:    # i.e if no users found
+                return -1
+            else:
+                return 1
+        except Error as e:
+            print(f"An error occurred: {e}")
+            self.conn.rollback()
 
     def close_connection(self):
         self.cursor.close()

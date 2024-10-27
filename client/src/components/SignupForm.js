@@ -86,7 +86,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
                         <input
                             required
                             type="text"
-                            name="Name"
+                            name="name"
                             onChange={changeHandler}
                             placeholder="Enter Name"
                             value={formData.Name}
