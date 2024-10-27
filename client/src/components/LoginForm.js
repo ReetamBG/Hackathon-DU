@@ -38,7 +38,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
                     localStorage.setItem("token", response.data.token); // Store token if received
                     navigate("/dashboard");
                 }
-                else if(response.status==402){
+                else if(response.status===402){
                     toast.error("user not found")
                 }
                 else {

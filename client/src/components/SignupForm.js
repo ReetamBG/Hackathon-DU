@@ -8,8 +8,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
+        Name: "",
         email: "",
         password: "",
         confirmPassword: ""
@@ -83,27 +82,14 @@ const SignupForm = ({ setIsLoggedIn }) => {
                 {/* First Name and Last Name */}
                 <div className='flex gap-x-4 mt-[20px]'>
                     <label className='w-full'>
-                        <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'>First Name<sup className='text-pink-200'>*</sup></p>
+                        <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'>Name<sup className='text-pink-200'>*</sup></p>
                         <input
                             required
                             type="text"
-                            name="firstName"
+                            name="Name"
                             onChange={changeHandler}
-                            placeholder="Enter First Name"
-                            value={formData.firstName}
-                            className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
-                        />
-                    </label>
-
-                    <label className='w-full'>
-                        <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'>Last Name<sup className='text-pink-200'>*</sup></p>
-                        <input
-                            required
-                            type="text"
-                            name="lastName"
-                            onChange={changeHandler}
-                            placeholder="Enter Last Name"
-                            value={formData.lastName}
+                            placeholder="Enter Name"
+                            value={formData.Name}
                             className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
                         />
                     </label>

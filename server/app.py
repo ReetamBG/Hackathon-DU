@@ -24,8 +24,7 @@ def signup():
 
     # Append new signup to users table
     users.append({
-        "firstName": data['firstName'],
-        "lastName": data['lastName'],
+        "Name": data['Name'],
         "email": data['email'],
         # "password": hashed_password,
         "password" : data['password'],
