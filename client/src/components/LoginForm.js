@@ -37,12 +37,16 @@ const LoginForm = ({ setIsLoggedIn }) => {
                     // Optionally save user data or token in localStorage
                     localStorage.setItem("token", response.data.token); // Store token if received
                     navigate("/dashboard");
-                } else {
+                }
+                else if(response.status==402){
+                    toast.error("user not found")
+                }
+                else {
                     toast.error("Login failed. Please check your credentials.");
                 }
             } catch (error) {
                 console.error("Error logging in:", error);
-                toast.error("Error logging in. Please try again.");
+                toast.error("Either user or");
             }
         };
 
