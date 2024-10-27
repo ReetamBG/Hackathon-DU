@@ -5,8 +5,9 @@ import Home from "./pages/Home"
 import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import Dashboard from "./pages/Dashboard"
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import PrivateRoute from "./components/PrivateRoute";
+import TestInterface from "./pages/TestInterface";
 
 
 function App() {
@@ -27,8 +28,10 @@ function App() {
           <PrivateRoute isLoggedIn={isLoggedIn}>
               <Dashboard/>
           </PrivateRoute>
-       
+        
         } />
+        <Route path="/testinterface" element= {<TestInterface/>} />
+        
 
       </Routes>
 
