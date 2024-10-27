@@ -46,7 +46,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
                 }
             } catch (error) {
                 console.error("Error logging in:", error);
-                toast.error("Either user or");
+                toast.error("Either email or password incorrect");
             }
         };
 
