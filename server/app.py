@@ -15,16 +15,13 @@ def hello():
 @app.route('/api/auth/signup', methods=['POST'])
 def signup():
     data = request.get_json()
+    print(data)    # just to check
 
     # Validate the incoming data
     if not data:
         return jsonify({"message": "No data received"}), 400
 
-    # Check if passwords match
-    # if data['password'] != data['confirmPassword']:
-    #     return jsonify({"message": "Passwords do not match"}), 400
-
-    # append ne signup to users
+    # append new signup to users table
     users.append({
         "firstName": data['firstName'],
         "lastName": data['lastName'],
@@ -33,9 +30,17 @@ def signup():
         "accountType": data.get('accountType')
     })
 
-    print(users)
-
     return jsonify({"message": "Account created successfully"}), 201
+
+
+@app.route('/api/auth/login/', methods=['POST'])
+def login():
+    data = request.get_json()
+    for user in users:
+        if user['email'] == data['email'] and user['password'] == data['password']:
+            return jsonify({'User Authenticated'})
+        else:
+            return jsonify({'Either user or password or both not correct'}), 400
 
 
 if __name__ == '__main__':
