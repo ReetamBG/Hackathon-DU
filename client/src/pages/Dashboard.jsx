@@ -46,6 +46,7 @@ const Dashboard = () => {
 
   // Handler to fetch test data and navigate to questionPage
   const handleTestClick = (test_id) => {
+    console.log("the test id i am sending is",{test_id})
     axios.post('http://127.0.0.1:5000/api/getTestById', { test_id })
       .then((response) => {
         const filteredResponse = response.data;
