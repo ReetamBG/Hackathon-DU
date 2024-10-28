@@ -33,7 +33,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
 
         try {
             const response = await axios.post('http://localhost:5000/api/auth/signup', accountData);
-            if (response.status === 201) {
+            if (response.status === 200) {
                 toast.success("Account Created");
                 setIsLoggedIn(true);
                 localStorage.setItem("username", formData.name);
