@@ -16,8 +16,8 @@ def signup():
                           accountType=data['accountType'])
     print(user_data)
     return jsonify({
-        'message' : 'signup successfull',
-        'user_data' : user_data
+        'message': 'signup successfull',
+        'user_data': user_data
     }), 200
 
 
@@ -30,8 +30,6 @@ def login():
                          password=data['password'])
     print(user_data)
     return jsonify({
-        'message' : 'login successfull',
-        'user_data' : user_data
+        'message': 'login successfull',
+        'user_data': user_data
     }), 200
-
-    return jsonify({'message': 'Either email or password not correct'}), 402
