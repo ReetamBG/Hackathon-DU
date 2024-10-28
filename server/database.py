@@ -119,16 +119,20 @@ class DBHelper:
 
     def get_test_list_all(self):
         try:
-            # Retrieve all tests with user_id, test_id, and test_name
-            query_tests = "SELECT user_id, test_id, test_name FROM tests"
+            # Retrieve all tests with user_id, test_id, test_name, and user_name by joining with the users table
+            query_tests = """
+        SELECT t.user_id, t.test_id, t.test_name, u.name AS user_name
+        FROM tests t
+        JOIN users u ON t.user_id = u.user_id
+        """
             self.cursor.execute(query_tests)
             test_data = self.cursor.fetchall()
 
-            # Format the result to include user_id, test_id, and test_name
+            # Format the result to include user_id, test_id, test_name, and user_name
             test_list = [{
-                "user_id": test[0],
-                "test_id": test[1],
-                "test_name": test[2]
+                "test_id": test[0],
+                "test_name": test[1],
+                "user_name": test[2]
             } for test in test_data]
 
             return {
@@ -138,6 +142,7 @@ class DBHelper:
         except Error as e:
             print(f"An error occurred: {e}")
             return {"error": "An error occurred while fetching tests"}
+
 
 
     def close_connection(self):
