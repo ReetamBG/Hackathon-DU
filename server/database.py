@@ -75,9 +75,9 @@ class DBHelper:
         try:
             query = """
         INSERT INTO tests (test_id, test_name, test_data, user_id)
-        VALUES (NULL, %s, %s, %s)  -- Added placeholder for user_id
+        VALUES (NULL, %s, %s, %s)
         """
-            self.cursor.execute(query, (test_name, test_data, user_id))  # Now passing three values
+            self.cursor.execute(query, (test_name, test_data, user_id))
             self.conn.commit()
             print("Test added successfully")
 
@@ -85,6 +85,60 @@ class DBHelper:
             print(f"An error occurred: {e}")
             self.conn.rollback()
             return None
+
+    def get_test_list(self, user_id):
+        try:
+            # Retrieve the user's name based on user_id
+            query_user = "SELECT name FROM users WHERE user_id = %s"
+            self.cursor.execute(query_user, (user_id))
+            user_name = self.cursor.fetchone()
+
+            # Check if the user exists
+            if not user_name:
+                return {"error": "User not found"}
+
+            # Retrieve all tests created by the user
+            query_tests = "SELECT test_id, test_name FROM tests WHERE user_id = %s"
+            self.cursor.execute(query_tests, (user_id))
+            test_data = self.cursor.fetchall()
+
+            # Format the result
+            test_list = [{
+                "test_id": test[0],
+                "test_name": test[1]
+            } for test in test_data]
+
+            return {
+                "user_name": user_name[0],
+                "test_list": test_list
+            }
+
+        except Error as e:
+            print(f"An error occurred: {e}")
+            return {"error": "An error occurred while fetching tests"}
+
+    def get_test_list_all(self):
+        try:
+            # Retrieve all tests with user_id, test_id, and test_name
+            query_tests = "SELECT user_id, test_id, test_name FROM tests"
+            self.cursor.execute(query_tests)
+            test_data = self.cursor.fetchall()
+
+            # Format the result to include user_id, test_id, and test_name
+            test_list = [{
+                "user_id": test[0],
+                "test_id": test[1],
+                "test_name": test[2]
+            } for test in test_data]
+
+            return {
+                "test_list": test_list
+            }
+
+        except Error as e:
+            print(f"An error occurred: {e}")
+            return {"error": "An error occurred while fetching tests"}
+
 
     def close_connection(self):
         self.cursor.close()

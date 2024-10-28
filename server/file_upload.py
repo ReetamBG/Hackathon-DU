@@ -2,6 +2,7 @@ import json  # Import json to handle conversion
 from flask import Blueprint, request, jsonify
 import pandas as pd
 from database import DBHelper
+import pickle
 
 file_upload_bp = Blueprint('file_upload', __name__)
 
@@ -12,9 +13,10 @@ def upload_test():
     print("Request received on /api/uploadTest")  # Log the request
 
     test_name = request.form['testName']
-    user_id = request.form.get('userId')  # Use .get() to avoid KeyError
+    user_id = pickle.load(open('user_id.pkl', 'rb'))
     file = request.files['file']
 
+    # Process the file inside the try block
     # Process the file inside the try block
     try:
         # Process the file (assuming it's a CSV or Excel file)
@@ -24,6 +26,9 @@ def upload_test():
             df = pd.read_excel(file)
         else:
             return jsonify({"error": "File type not supported"}), 400
+
+        # Remove any rows that are entirely NaN
+        df = df.dropna(how='all')
 
         # Assuming the file has these specific columns
         questions_list = []
@@ -63,3 +68,19 @@ def upload_test():
     except Exception as e:
         print("Error processing file:", e)
         return jsonify({"error": "An error occurred while processing the file"}), 500
+
+
+@file_upload_bp.route('/api/refreshTest', methods=['POST'])
+def get_test():
+    db = DBHelper()
+    user_id = pickle.load(open('user_id.pkl', 'rb'))
+    db.get_test_list(user_id=user_id)
+
+
+@file_upload_bp.route('/api/refreshTestAll', methods=['POST'])
+def get_test_all():
+    db = DBHelper()
+    user_id = pickle.load(open('user_id.pkl', 'rb'))
+    db.get_test_list_all()
+
+

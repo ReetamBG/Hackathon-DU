@@ -25,7 +25,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
                     localStorage.setItem("username", response.data?.user_data?.user_name);
                     localStorage.setItem("user_id",response.data?.user_data?.user_id); 
                     navigate("/dashboard");
-                    console.log(response.data)
+                    console.log(response.data,"1")
                 } else if (response.status === 402) {
                     toast.error("User not found");
                 } else {
