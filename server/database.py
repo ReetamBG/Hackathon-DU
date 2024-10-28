@@ -130,9 +130,9 @@ class DBHelper:
 
             # Format the result to include user_id, test_id, test_name, and user_name
             test_list = [{
-                "test_id": test[0],
-                "test_name": test[1],
-                "user_name": test[2]
+                "test_id": test[1],
+                "test_name": test[2],
+                "user_name": test[3]
             } for test in test_data]
 
             return {
