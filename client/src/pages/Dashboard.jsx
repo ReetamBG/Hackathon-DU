@@ -37,6 +37,7 @@ const Dashboard = () => {
       .then((response) => {
         setAllTests(response.data.test_list || []);
         toast.success("All test data refreshed successfully!");
+        console.log("this is the response from all test data:",response.data)
       })
       .catch((error) => {
         console.error('Error refreshing all test data:', error);
@@ -82,7 +83,6 @@ const Dashboard = () => {
                     onClick={() => handleTestClick(test.test_id)} // Call handleTestClick with test_id
                   >
                     <p><strong>Test Name:</strong> {test.test_name || 'N/A'}</p>
-                    <p><strong>User Name:</strong> {test.user_name || 'N/A'}</p>
                   </li>
                 ))}
               </ul>
@@ -107,8 +107,8 @@ const Dashboard = () => {
                     className='py-2 border-b border-richblack-700 cursor-pointer' 
                     onClick={() => handleTestClick(test.test_id)} // Call handleTestClick with test_id
                   >
-                    <p><strong>Test Name:</strong> {test.test_name || 'N/A'}</p>
                     <p><strong>User Name:</strong> {test.user_name || 'N/A'}</p>
+                    <p><strong>Test Name:</strong> {test.test_name || 'N/A'}</p>
                   </li>
                 ))}
               </ul>
