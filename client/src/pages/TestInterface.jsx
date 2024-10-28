@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 
 const TestInterface = () => {
-  // State for form data
   const [formData, setFormData] = useState({
     testName: '',
     file: null,
   });
+  const [userId, setUserId] = useState(null);
+  const navigate = useNavigate();
+
+  // Retrieve userId from session storage on mount
+  useEffect(() => {
+    const storedUserId = sessionStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+  }, []);
 
   // Handle input change
   const handleInputChange = (event) => {
@@ -34,6 +44,9 @@ const TestInterface = () => {
     const formDataToSend = new FormData();
     formDataToSend.append('testName', formData.testName);
     formDataToSend.append('file', formData.file);
+    if (userId) {
+      formDataToSend.append('userId', userId); // Append userId to formData
+    }
 
     axios.post('/api/uploadTest', formDataToSend, {
       headers: {
@@ -45,12 +58,13 @@ const TestInterface = () => {
     })
     .catch((error) => {
       console.error('Error uploading file:', error);
-      toast.error("error uploading file data")
+      navigate("/dashboard");
+      toast.error("Error uploading file data");
     });
   };
 
   return (
-    <div className="text-white text-center mx-auto mt-2 ">
+    <div className="text-white text-center mx-auto mt-2">
       <form onSubmit={handleSubmit} className='flex flex-col justify-between text-3xl gap-1'>
         <label className='flex gap-3 text-center'>
           Test Name:
@@ -59,7 +73,7 @@ const TestInterface = () => {
             name="testName"
             value={formData.testName}
             onChange={handleInputChange}
-            className='rounded-[8px]'
+            className='rounded-[8px] text-black'
           />
         </label>
         <br />
@@ -73,11 +87,10 @@ const TestInterface = () => {
           />
         </label>
         <br />
-        <button type="submit" className=' bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>Create Test</button>
+        <button type="submit" className='bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>Create Test</button>
       </form>
     </div>
   );
 };
 
 export default TestInterface;
-

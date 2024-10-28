@@ -8,6 +8,8 @@ import Dashboard from "./pages/Dashboard"
 import { useState } from 'react'
 import PrivateRoute from "./components/PrivateRoute";
 import TestInterface from "./pages/TestInterface";
+import Questionpage from "./pages/Questionpage";
+import Scoreboard from "./pages/Scoreboard";
 
 
 function App() {
@@ -31,6 +33,8 @@ function App() {
         
         } />
         <Route path="/testinterface" element= {<TestInterface/>} />
+        <Route path="/questions" element={<Questionpage />} />
+        <Route path="/scoreboard" element={<Scoreboard />} />
         
 
       </Routes>
