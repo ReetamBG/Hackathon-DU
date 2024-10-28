@@ -38,6 +38,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
                 setIsLoggedIn(true);
                 localStorage.setItem("username", formData.name);
                 navigate("/dashboard");
+                console.log(response.data,"hello")
             } else {
                 toast.error("Failed to create account");
             }

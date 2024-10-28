@@ -22,8 +22,9 @@ const LoginForm = ({ setIsLoggedIn }) => {
                 if (response.status === 200) {
                     toast.success("Login Successful");
                     setIsLoggedIn(true);
-                    localStorage.setItem("username", response.data.username); 
+                    localStorage.setItem("username", response.data.user_name); 
                     navigate("/dashboard");
+                    console.log(response.data)
                 } else if (response.status === 402) {
                     toast.error("User not found");
                 } else {
