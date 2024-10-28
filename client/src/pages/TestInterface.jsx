@@ -8,7 +8,7 @@ const TestInterface = () => {
     testName: '',
     file: null,
   });
-  const [userId, setUserId] = useState(null);
+  const [userId, setUserId] = useState("");
   const navigate = useNavigate();
 
   // Retrieve userId from session storage on mount
@@ -47,6 +47,7 @@ const TestInterface = () => {
     if (userId) {
       formDataToSend.append('userId', userId); // Append userId to formData
     }
+    console.log(formDataToSend)
 
     // Ensure you use the correct URL for your Flask backend
     axios.post('http://127.0.0.1:5000/api/uploadTest', formDataToSend, {
