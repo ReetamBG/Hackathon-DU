@@ -72,10 +72,12 @@ def upload_test():
 
 @file_upload_bp.route('/api/refreshTest', methods=['POST'])
 def get_test():
+    print('request on /api/refreshTest')
     db = DBHelper()
     user_id = pickle.load(open('user_id.pkl', 'rb'))
-    db.get_test_list(user_id=user_id)
-
+    test_list = db.get_test_list(user_id=user_id)
+    print(test_list)
+    return test_list, 200
 
 @file_upload_bp.route('/api/refreshTestAll', methods=['POST'])
 def get_test_all():

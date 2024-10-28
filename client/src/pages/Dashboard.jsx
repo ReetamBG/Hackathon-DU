@@ -5,32 +5,29 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [username, setUsername] = useState("");
-  const [userId, setUserId] = useState(null);
+  const [data, setData] = useState([]);
   const navigate = useNavigate();
 
-  // Retrieve username and userId from localStorage on mount
+  // Retrieve username from localStorage on mount
   useEffect(() => {
     const savedUsername = localStorage.getItem("username");
-    const savedUserId = localStorage.getItem("userId");
     if (savedUsername) setUsername(savedUsername);
-    if (savedUserId) setUserId(savedUserId);
   }, []);
 
-  // Refresh handler to send userId to the backend
+  // Refresh handler to send request to the backend
   const refreshhandler = () => {
-    if (userId) {
-      axios.post('/api/refreshTest', { userId })
-        .then((response) => {
-          console.log('User data refreshed:', response.data);
-          toast.success("User data refreshed successfully!");
-        })
-        .catch((error) => {
-          console.error('Error refreshing user data:', error);
-          toast.error("Failed to refresh user data");
-        });
-    } else {
-      toast.error("User ID not found");
-    }
+    axios.post('http://127.0.0.1:5000/api/refreshTest')
+      .then((response) => {
+        console.log('User data refreshed:', response.data);
+        setData(response.data);
+        console.log(data);
+
+        toast.success("User data refreshed successfully!");
+      })
+      .catch((error) => {
+        console.error('Error refreshing user data:', error);
+        toast.error("Failed to refresh user data");
+      });
   };
 
   // Submit handler to navigate to the test interface
@@ -50,6 +47,13 @@ const Dashboard = () => {
                     px-[12px] rounded-[8px] border border-richblack-700'>
         <h2>Your Previous Test Data</h2>
         <button onClick={refreshhandler}>Refresh</button>
+        <p>No Test Data yet</p>
+      </div>
+
+      <div className='bg-richblack-800 text-richblack-100 py-[8px] 
+                    px-[12px] rounded-[8px] border border-richblack-700'>
+        <h2>Your Previous Test Data</h2>
+        <button >Refresh</button>
         <p>No Test Data yet</p>
       </div>
 

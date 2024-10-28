@@ -9,6 +9,7 @@ const TestInterface = () => {
     file: null,
   });
   const [userId, setUserId] = useState("");
+  const [testResponse, setTestResponse] = useState(null); // State to store JSON response
   const navigate = useNavigate();
 
   // Retrieve userId from session storage on mount
@@ -47,9 +48,7 @@ const TestInterface = () => {
     if (userId) {
       formDataToSend.append('userId', userId); // Append userId to formData
     }
-    console.log(formDataToSend)
 
-    // Ensure you use the correct URL for your Flask backend
     axios.post('http://127.0.0.1:5000/api/uploadTest', formDataToSend, {
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -57,15 +56,24 @@ const TestInterface = () => {
     })
     .then((response) => {
       console.log('File uploaded successfully:', response.data);
-      // Handle successful response, e.g., redirect or show a message
+      
+      // Filter out invalid questions
+      const validQuestions = response.data.questions.filter(question => 
+        question.question && 
+        question.correctAnswer && 
+        Object.values(question.options).every(option => option !== undefined && option !== NaN)
+      );
+    
+      // Set the filtered response data
+      const filteredResponse = {
+        ...response.data,
+        questions: validQuestions,
+      };
+    
+      setTestResponse(filteredResponse); // Store the filtered JSON response in state
+      navigate("/questionpage", { state: { testResponse: filteredResponse } }); // Pass the filtered response
     })
-    .catch((error) => {
-      console.error('Error uploading file:', error);
-      navigate("/dashboard");
-      toast.error("Error uploading file data");
-    });
-  };
-
+  }
 
   return (
     <div className="text-white text-center mx-auto mt-2">

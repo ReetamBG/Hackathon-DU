@@ -1,26 +1,23 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 const Scoreboard = () => {
-  const [feedback, setFeedback] = useState('');
+  const location = useLocation();
   const navigate = useNavigate();
 
-  const handleFeedbackChange = (event) => {
-    setFeedback(event.target.value);
-  };
-
-  const handleSubmitFeedback = () => {
-    // Submit feedback logic here (e.g., send to backend)
-    console.log('Feedback submitted:', feedback);
-    navigate('/dashboard');
-  };
+  // Retrieve score from location state
+  const { score } = location.state || { score: 0 };
 
   return (
-    <div className="text-white mx-auto mt-5">
-      <h2>Your Score: {/* Display score here */}</h2>
-      <h3>Feedback:</h3>
-      <textarea value={feedback} onChange={handleFeedbackChange} rows="4" cols="50" />
-      <button onClick={handleSubmitFeedback}>Submit Feedback</button>
+    <div className="text-center text-white mt-4 text-5xl">
+      <h2 className="text-3xl mb-4">Test Completed!</h2>
+      <p className="text-2xl">Your score is: {score}</p>
+      <button
+        onClick={() => navigate('/dashboard')}
+        className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2"
+      >
+        Back to Dashboard
+      </button>
     </div>
   );
 };
