@@ -15,7 +15,10 @@ def signup():
                           email=data['email'],
                           accountType=data['accountType'])
     print(user_data)
-    return jsonify(user_data), 200
+    return jsonify({
+        'message' : 'signup successfull',
+        'user_data' : user_data
+    }), 200
 
 
 @auth_bp.route('/api/auth/login', methods=['POST'])
@@ -25,8 +28,10 @@ def login():
 
     user_data = db.login(email=data['email'],
                          password=data['password'])
-    if user_data:
-        print(user_data)
-        return jsonify(user_data), 200
+    print(user_data)
+    return jsonify({
+        'message' : 'login successfull',
+        'user_data' : user_data
+    }), 200
 
     return jsonify({'message': 'Either email or password not correct'}), 402
