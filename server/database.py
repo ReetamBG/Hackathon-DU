@@ -90,7 +90,7 @@ class DBHelper:
         try:
             # Retrieve the user's name based on user_id
             query_user = "SELECT name FROM users WHERE user_id = %s"
-            self.cursor.execute(query_user, (user_id))
+            self.cursor.execute(query_user, (user_id,))  # Add a comma after user_id
             user_name = self.cursor.fetchone()
 
             # Check if the user exists
@@ -99,7 +99,7 @@ class DBHelper:
 
             # Retrieve all tests created by the user
             query_tests = "SELECT test_id, test_name FROM tests WHERE user_id = %s"
-            self.cursor.execute(query_tests, (user_id))
+            self.cursor.execute(query_tests, (user_id,))  # Add a comma after user_id
             test_data = self.cursor.fetchall()
 
             # Format the result
