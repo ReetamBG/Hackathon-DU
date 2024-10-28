@@ -5,30 +5,51 @@ import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
   const [username, setUsername] = useState("");
-  const [data, setData] = useState([]);
+  const [data,setData]=useState([])
+  const [userId, setUserId] = useState(null);
   const navigate = useNavigate();
 
-  // Retrieve username from localStorage on mount
+  // Retrieve username and userId from localStorage on mount
   useEffect(() => {
     const savedUsername = localStorage.getItem("username");
+    const savedUserId = localStorage.getItem("userId");
     if (savedUsername) setUsername(savedUsername);
+    if (savedUserId) setUserId(savedUserId);
   }, []);
 
-  // Refresh handler to send request to the backend
+  // Refresh handler to send userId to the backend
   const refreshhandler = () => {
-    axios.post('http://127.0.0.1:5000/api/refreshTest')
-      .then((response) => {
-        console.log('User data refreshed:', response.data);
-        setData(response.data);
-        console.log(data);
+    if (1) {
+      axios.post('http://127.0.0.1:5000/api/refreshTest')
+        .then((response) => {
+          console.log('User data refreshed:', response.data);
+          setData(response.data)
+          console.log(data);
 
-        toast.success("User data refreshed successfully!");
-      })
-      .catch((error) => {
-        console.error('Error refreshing user data:', error);
-        toast.error("Failed to refresh user data");
-      });
+          toast.success("User data refreshed successfully!");
+        })
+        .catch((error) => {
+          console.error('Error refreshing user data:', error);
+          toast.error("Failed to refresh user data");
+        });
+    } else {
+      toast.error("User ID not found");
+    }
   };
+  function refreshhandlerall(){
+    axios.post('http://127.0.0.1:5000/api/refreshTestAll')
+        .then((response) => {
+          console.log('User data refreshed:', response.data);
+          setData(response.data)
+          console.log(data);
+
+          toast.success("User data refreshed successfully!");
+        })
+        .catch((error) => {
+          console.error('Error refreshing user data:', error);
+          toast.error("Failed to refresh user data");
+        });
+  }
 
   // Submit handler to navigate to the test interface
   const submithandler = (event) => {
@@ -53,9 +74,10 @@ const Dashboard = () => {
       <div className='bg-richblack-800 text-richblack-100 py-[8px] 
                     px-[12px] rounded-[8px] border border-richblack-700'>
         <h2>Your Previous Test Data</h2>
-        <button >Refresh</button>
+        <button onClick={refreshhandlerall}>Refresh</button>
         <p>No Test Data yet</p>
       </div>
+
 
       <button onClick={submithandler} className='w-full bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
         Create your own Test
