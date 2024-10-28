@@ -8,6 +8,7 @@ database structure :
 2. tests table - test_id (primary auto inc), test_name, test_content (questions and answers in json), 
 '''
 
+
 class DBHelper:
 
     def __init__(self):
@@ -65,6 +66,21 @@ class DBHelper:
                 return user_data
             else:
                 return -1
+        except Error as e:
+            print(f"An error occurred: {e}")
+            self.conn.rollback()
+            return None
+
+    def save_test(self, test_name, test_data, user_id):
+        try:
+            query = """
+        INSERT INTO tests (test_id, test_name, test_data, user_id)
+        VALUES (NULL, %s, %s, %s)  -- Added placeholder for user_id
+        """
+            self.cursor.execute(query, (test_name, test_data, user_id))  # Now passing three values
+            self.conn.commit()
+            print("Test added successfully")
+
         except Error as e:
             print(f"An error occurred: {e}")
             self.conn.rollback()
