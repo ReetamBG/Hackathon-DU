@@ -14,12 +14,17 @@ const SignupForm = ({ setIsLoggedIn }) => {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [accountType, setAccountType] = useState("user");
 
     function changeHandler(event) {
         setFormData(prevData => ({ ...prevData, [event.target.name]: event.target.value }));
     }
 
     async function submitHandler(event) {
+        const accountData = {
+            ...formData,
+            accountType
+        };
         event.preventDefault();
         if (formData.password !== formData.confirmPassword) {
             toast.error("Passwords do not match");
@@ -27,7 +32,7 @@ const SignupForm = ({ setIsLoggedIn }) => {
         }
 
         try {
-            const response = await axios.post('http://localhost:5000/api/auth/signup', formData);
+            const response = await axios.post('http://localhost:5000/api/auth/signup', accountData);
             if (response.status === 201) {
                 toast.success("Account Created");
                 setIsLoggedIn(true);
@@ -44,6 +49,25 @@ const SignupForm = ({ setIsLoggedIn }) => {
 
     return (
         <div>
+            {/* Account type selection */}
+            <div className='flex bg-richblack-800 p-1 gap-x-1 my-6 rounded-full max-w-max'>
+                <button
+                    className={`${accountType === "user" 
+                    ? "bg-richblack-900 text-richblack-5" 
+                    : "bg-transparent text-richblack-200"} py-2 px-5 rounded-full transition-all duration-200`}
+                    onClick={() => setAccountType("user")}
+                >
+                    User
+                </button>
+                <button
+                    className={`${accountType === "admin" 
+                    ? "bg-richblack-900 text-richblack-5" 
+                    : "bg-transparent text-richblack-200"} py-2 px-5 rounded-full transition-all duration-200`}
+                    onClick={() => setAccountType("admin")}
+                >
+                    Admin
+                </button>
+            </div>
             <form onSubmit={submitHandler}>
                 {/* Name Input */}
                 <div className='flex gap-x-4 mt-[20px]'>
