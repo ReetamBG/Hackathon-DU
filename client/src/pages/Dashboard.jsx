@@ -22,8 +22,7 @@ const Dashboard = () => {
   const refreshUserTests = () => {
     axios.post('http://127.0.0.1:5000/api/refreshTest', { userId })
       .then((response) => {
-        console.log('User data refreshed:', response.data);
-        setUserTests(response.data.test_list || []);  // Update only userTests
+        setUserTests(response.data.test_list || []);
         toast.success("User data refreshed successfully!");
       })
       .catch((error) => {
@@ -36,8 +35,7 @@ const Dashboard = () => {
   const refreshAllTests = () => {
     axios.post('http://127.0.0.1:5000/api/refreshTestAll')
       .then((response) => {
-        console.log('All test data refreshed:', response.data);
-        setAllTests(response.data.test_list || []);  // Update only allTests
+        setAllTests(response.data.test_list || []);
         toast.success("All test data refreshed successfully!");
       })
       .catch((error) => {
@@ -46,11 +44,18 @@ const Dashboard = () => {
       });
   };
 
-  // Submit handler to navigate to the test interface
-  const submitHandler = (event) => {
-    event.preventDefault();
-    toast.success("Welcome to Test Interface");
-    navigate("/testinterface");
+  // Handler to fetch test data and navigate to questionPage
+  const handleTestClick = (test_id) => {
+    axios.post('http://127.0.0.1:5000/api/getTestById', { test_id })
+      .then((response) => {
+        const filteredResponse = response.data;
+        // Navigate to questionPage with testResponse as state
+        navigate("/questionpage", { state: { testResponse: filteredResponse } });
+      })
+      .catch((error) => {
+        console.error('Error fetching test data:', error);
+        toast.error("Failed to load test data");
+      });
   };
 
   return (
@@ -70,7 +75,11 @@ const Dashboard = () => {
             {userTests.length > 0 ? (
               <ul>
                 {userTests.map((test, index) => (
-                  <li key={index} className='py-2 border-b border-richblack-700'>
+                  <li 
+                    key={index} 
+                    className='py-2 border-b border-richblack-700 cursor-pointer' 
+                    onClick={() => handleTestClick(test.test_id)} // Call handleTestClick with test_id
+                  >
                     <p><strong>Test Name:</strong> {test.test_name || 'N/A'}</p>
                     <p><strong>User Name:</strong> {test.user_name || 'N/A'}</p>
                   </li>
@@ -92,7 +101,11 @@ const Dashboard = () => {
             {allTests.length > 0 ? (
               <ul>
                 {allTests.map((test, index) => (
-                  <li key={index} className='py-2 border-b border-richblack-700'>
+                  <li 
+                    key={index} 
+                    className='py-2 border-b border-richblack-700 cursor-pointer' 
+                    onClick={() => handleTestClick(test.test_id)} // Call handleTestClick with test_id
+                  >
                     <p><strong>Test Name:</strong> {test.test_name || 'N/A'}</p>
                     <p><strong>User Name:</strong> {test.user_name || 'N/A'}</p>
                   </li>
@@ -106,7 +119,7 @@ const Dashboard = () => {
 
       </div>
 
-      <button onClick={submitHandler} className='bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
+      <button onClick={() => navigate("/testinterface")} className='bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
         Create your own Test
       </button>
     </div>
