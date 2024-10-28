@@ -35,19 +35,23 @@ const TestInterface = () => {
     formDataToSend.append('testName', formData.testName);
     formDataToSend.append('file', formData.file);
 
-    axios.post('/api/uploadTest', formDataToSend, {
+    // Ensure you use the correct URL for your Flask backend
+    axios.post('http://127.0.0.1:5000/api/uploadTest', formDataToSend, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },
     })
     .then((response) => {
       console.log('File uploaded successfully:', response.data);
+      // Handle successful response, e.g., redirect or show a message
     })
     .catch((error) => {
       console.error('Error uploading file:', error);
-      toast.error("error uploading file data")
+      // Optionally, redirect or show an error message
+      toast.error("Error uploading file data");
     });
   };
+
 
   return (
     <div className="text-white text-center mx-auto mt-2 ">
