@@ -60,11 +60,7 @@ const TestInterface = () => {
     })
     .catch((error) => {
       console.error('Error uploading file:', error);
-<<<<<<< HEAD
       navigate("/dashboard");
-=======
-      // Optionally, redirect or show an error message
->>>>>>> 5704de460c2cd191e24ae11771dba87fe987c17f
       toast.error("Error uploading file data");
     });
   };
