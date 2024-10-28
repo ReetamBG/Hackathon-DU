@@ -6,42 +6,27 @@ import axios from 'axios';
 
 const LoginForm = ({ setIsLoggedIn }) => {
     const navigate = useNavigate();
-
-    const [formData, setFormData] = useState({
-        email: "",
-        password: ""
-    });
-
+    const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
-    const [submitData, setSubmitData] = useState(null); // State to trigger useEffect
+    const [submitData, setSubmitData] = useState(null);
 
-    // Change handler for input fields
     function changeHandler(event) {
-        setFormData((prevData) => ({
-            ...prevData,
-            [event.target.name]: event.target.value
-        }));
+        setFormData(prevData => ({ ...prevData, [event.target.name]: event.target.value }));
     }
 
-    // Effect to handle login on form submission
     useEffect(() => {
         const loginUser = async () => {
-            if (!submitData) return; // Exit if no submitData
-
+            if (!submitData) return;
             try {
                 const response = await axios.post('http://localhost:5000/api/auth/login', submitData);
-                
                 if (response.status === 200) {
                     toast.success("Login Successful");
                     setIsLoggedIn(true);
-                    // Optionally save user data or token in localStorage
-                    localStorage.setItem("token", response.data.token); // Store token if received
+                    localStorage.setItem("username", response.data.username); 
                     navigate("/dashboard");
-                }
-                else if(response.status===402){
-                    toast.error("user not found")
-                }
-                else {
+                } else if (response.status === 402) {
+                    toast.error("User not found");
+                } else {
                     toast.error("Login failed. Please check your credentials.");
                 }
             } catch (error) {
@@ -50,19 +35,17 @@ const LoginForm = ({ setIsLoggedIn }) => {
             }
         };
 
-        loginUser(); // Call the loginUser function
-    }, [submitData]); // Runs effect when submitData changes
+        loginUser();
+    }, [submitData]);
 
-    // Submit handler for the form
     const submitHandler = (event) => {
         event.preventDefault();
-        setSubmitData(formData); // Trigger useEffect by updating submitData
+        setSubmitData(formData);
     };
 
     return (
         <div>
             <form onSubmit={submitHandler}>
-                {/* Email */}
                 <div className='mt-5'>
                     <label className='w-full'>
                         <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'>Email Address<sup className='text-pink-200'>*</sup></p>
@@ -78,8 +61,7 @@ const LoginForm = ({ setIsLoggedIn }) => {
                     </label>
                 </div>
 
-                {/* Password */}
-                <div className='w-full relative mt-5'>
+                <div className='relative mt-5'>
                     <label className='w-full'>
                         <p className='text-[0.875rem] text-richblack-5 mb-1 leading-[1.375rem]'>Password<sup className='text-pink-200'>*</sup></p>
                         <input
@@ -92,19 +74,18 @@ const LoginForm = ({ setIsLoggedIn }) => {
                             className='bg-richblack-800 rounded-[0.5rem] text-richblack-5 w-full p-[12px]'
                         />
                         <span
-                            className='absolute right-3 top-[38px] cursor-pointer' 
-                            onClick={() => setShowPassword((prev) => !prev)}
+                            className='absolute right-3 top-[38px] cursor-pointer'
+                            onClick={() => setShowPassword(prev => !prev)}
                         >
-                            {showPassword ? 
-                                <AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF' /> 
-                                : 
-                                <AiOutlineEye fontSize={24} fill='#AFB2BF' />
-                            }
+                            {showPassword ? <AiOutlineEyeInvisible fontSize={24} fill='#AFB2BF' /> : <AiOutlineEye fontSize={24} fill='#AFB2BF' />}
                         </span>
                     </label>
                 </div>
 
-                <button className='w-full bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
+                <button
+                    type="submit"
+                    className='w-full bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'
+                >
                     Log In
                 </button>
             </form>
