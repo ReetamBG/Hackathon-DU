@@ -15,7 +15,7 @@ def signup():
                           email=data['email'],
                           accountType=data['accountType'])
     print(user_data)
-    return jsonify(user_data), 201
+    return jsonify(user_data), 200
 
 
 @auth_bp.route('/api/auth/login', methods=['POST'])
