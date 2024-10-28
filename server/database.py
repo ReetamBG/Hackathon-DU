@@ -5,7 +5,7 @@ from mysql.connector import Error
 '''
 database structure :
 1. users table - user_id (primary auto inc), name, email, password, user_type
-2. tests table - test_id (primary auto inc), test_name, test_content (questions and answers in json), 
+2. tests table - test_id (primary auto inc), test_name, test_data (questions and answers in json), user_id
 '''
 
 
@@ -143,6 +143,12 @@ class DBHelper:
             print(f"An error occurred: {e}")
             return {"error": "An error occurred while fetching tests"}
 
+
+    def get_test(self, test_id):
+        query = "SELECT * FROM tests WHERE test_id=%s"
+        self.cursor.execute(query, (test_id,))
+        response = self.cursor.fetchone()
+        return response
 
 
     def close_connection(self):

@@ -89,3 +89,53 @@ def get_test_all():
     return test_list, 200
 
 
+@file_upload_bp.route('/api/getTestById', methods=['POST'])
+def fetch_test():
+    db = DBHelper()
+    data = request.get_json()
+    test_id = data.get('test_id')
+    print(f"Request received on /api/fetchTest with test_id: {test_id}")
+
+    try:
+        # Fetch the test data from the database
+        test_data = db.get_test(test_id=test_id)
+
+        # Log the output to inspect its structure
+        print("Fetched test_data:", test_data)
+
+        if test_data is None:
+            return jsonify({"error": "Test not found"}), 404
+
+        # Check if test_data is a tuple
+        if isinstance(test_data, tuple):
+            # Log tuple structure
+            print("Tuple structure:", test_data)
+
+            # Access the elements of the tuple using indices
+            test_name = test_data[0]  # Adjust according to your database structure
+            questions_list = json.loads(test_data[1])  # Assuming the second element is the JSON string
+            user_id = test_data[2]  # Assuming the third element is the user ID
+
+            json_response = {
+                "testName": test_name,
+                "questions": questions_list,
+                "userId": user_id
+            }
+        else:
+            # Handle the case where test_data is a dictionary
+            questions_list = json.loads(test_data['test_data'])
+            json_response = {
+                "testName": test_data['test_name'],
+                "questions": questions_list,
+                "userId": test_data['user_id']
+            }
+
+        print("Generated JSON Response:", json_response)
+        return jsonify(json_response), 200
+
+    except Exception as e:
+        print(f"Error occurred: {e}")
+        return jsonify({"error": "An error occurred while fetching the test"}), 500
+
+
+
