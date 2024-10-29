@@ -105,7 +105,10 @@ const Questionpage = () => {
   //ths
 
   return (
-    <div className="text-white text-center mx-auto mt-2">
+    <div className="text-white text-center mx-auto mt-2 w-[500px]">
+      <div className="text-2xl flex flex-col gap-5 mt-7 mb-10">
+          <p>The Total Number of Questions: <b>{questions.length}</b></p>
+        </div>
       <h2 className="text-3xl mb-4">{currentQuestion.question}</h2>
       <div className="flex flex-col gap-4 text-xl">
         {Object.entries(currentQuestion.options).map(([key, option]) => (
@@ -126,6 +129,9 @@ const Questionpage = () => {
         <button onClick={handlePreviousQuestion} disabled={currentQuestionIndex === 0} className="bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
           Previous
         </button>
+        <button onClick={hinthandler} className="bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
+        Get Hint
+      </button>
         <button onClick={handleNextQuestion} disabled={currentQuestionIndex === questions.length - 1} className="bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
           Next
         </button>
@@ -133,27 +139,18 @@ const Questionpage = () => {
       <button onClick={handleSubmitTest} className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
         Submit Test
       </button>
-
+      <div className='flex flex-col'>
       {hint && (
         <div className="mt-6 text-xl text-white">
           <p><strong>Hint:</strong> {hint}</p>
         </div>
       )}
 
-      {score !== null && (
-        <div className="text-2xl flex flex-col gap-5 mt-7">
-          <p>The Total Number of Questions available are : <b>{questions.length}</b></p>
-          <p className='text-4xl'>Good Luck!!</p>
-        </div>
-      )}
-
-      <button onClick={hinthandler} className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
-        Get Hint
-      </button>
-      <button onClick={handleAiFeature} className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
+      
+      <button onClick={handleAiFeature} className="mt-6 bg-blue-200 text-richblack-900 rounded-[8px] px-4 py-2 ">
               Create New Test with AI
        </button>
-
+      </div>
     </div>
   );
 };

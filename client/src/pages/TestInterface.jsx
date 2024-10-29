@@ -79,18 +79,18 @@ const TestInterface = () => {
     <div className="text-white text-center mx-auto mt-[15rem]">
       <form onSubmit={handleSubmit} className='flex flex-col justify-between text-3xl gap-1'>
         <label className='flex gap-3 text-center '>
-          TEST NAME:
+          Test Name:
           <input
             type="text"
             name="testName"
             value={formData.testName}
             onChange={handleInputChange}
-            className='rounded-[8px] text-black w-full '
+            className='rounded-[8px] text-black w-full h-[3rem] '
           />
         </label>
         <br />
         <label className='flex gap-3'>
-          Upload File:
+          Upload file:
           <input
             type="file"
             onChange={handleFileChange}
