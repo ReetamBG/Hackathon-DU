@@ -85,6 +85,21 @@ const Questionpage = () => {
       console.error("Error fetching hint:", error);
     }
   };
+  //this
+  async function handleAiFeature() {
+    try {
+      console.log("sending data to reetam for ai", questions);
+
+      const response = await axios.post('http://127.0.0.1:5000/api/getAiTest', {
+          questions,  // Only sending the question text
+      });
+      console.log(response.data);
+    } catch (error) {
+      console.log("Error in getting response for ai:", error);
+    }
+  };
+
+  //ths
 
   return (
     <div className="text-white text-center mx-auto mt-2">
@@ -132,6 +147,10 @@ const Questionpage = () => {
       <button onClick={hinthandler} className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
         Get Hint
       </button>
+      <button onClick={handleAiFeature} className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
+              Create New Test with AI
+       </button>
+
     </div>
   );
 };
