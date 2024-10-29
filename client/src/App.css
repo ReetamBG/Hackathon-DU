@@ -6,3 +6,50 @@ html,
 body {
     overflow-x: hidden;
 }
+
+
+.container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 50px 20px;
+}
+
+.card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    transition: transform 0.4s ease;
+    width: 300px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 10px #337ab7;
+}
+
+.card img {
+    width: 100px;
+    margin-bottom: 20px;
+ }
+
+.card h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+.card a {
+    text-decoration: none;
+    color: #337ab7;
+}
+
+.card a:hover {
+    color: #23527c;
+}
