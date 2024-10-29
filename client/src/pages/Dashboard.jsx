@@ -69,16 +69,16 @@ const Dashboard = () => {
   };
 
   return (
-    <div className='text-4xl mx-auto flex flex-col justify-evenly h-full text-white'>
-      <h1 className='text-yellow-100 text-center'>
-        Welcome to the Dashboard, {username}!
+    <div className='text-3xl mx-auto flex flex-col justify-evenly h-full text-white w-full'>
+      <h1 className='text-yellow-100 text-left ml-[8rem] text-6xl'>
+        Welcome, {username}!!
       </h1>
       <div className='flex gap-[5rem] justify-evenly w-full'>
         
         {/* Your Previous Test Data Panel */}
         <div className='bg-richblack-800 text-richblack-100 py-[8px] 
-                        px-[12px] rounded-[8px] border border-richblack-700'>
-          <h2>Your Previous Test Data</h2>
+                        px-[12px] rounded-[8px] border border-richblack-700 w-[50rem]'>
+          <h2 className='text-blue-400'>YOUR TESTS</h2>
           <button onClick={refreshUserTests} className='w-full bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>Refresh</button>
           
           <div className='mt-4 max-h-64 overflow-y-auto'> {/* Scrollable area */}
@@ -90,7 +90,7 @@ const Dashboard = () => {
                     className='py-2 border-b border-richblack-700 cursor-pointer' 
                     onClick={() => handleTestClick(test.test_id)} // Call handleTestClick with test_id
                   >
-                    <p><strong>Test Name:</strong> {test.test_name || 'N/A'}</p>
+                    <p className='text-blue-400'><strong className='text-pink-100'>Test Name:</strong> <i>{test.test_name || 'N/A'}</i></p>
                   </li>
                 ))}
               </ul>
@@ -101,9 +101,9 @@ const Dashboard = () => {
         </div>
 
         {/* All Test Data Panel */}
-        <div className='bg-richblack-800 text-richblack-100 py-[8px] 
-                        px-[12px] rounded-[8px] border border-richblack-700'>
-          <h2>All Test Data</h2>
+        <div className='bg-richblack-800 text-richblack-100 py-[10px] 
+                        px-[12px] rounded-[8px] border border-richblack-700 w-[50rem] justify-evenly'>
+          <h2 className='text-blue-400'>ALL TESTS</h2>
           <button onClick={refreshAllTests} className='w-full bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>Refresh</button>
           
           <div className='mt-4 max-h-64 overflow-y-auto'> {/* Scrollable area */}
@@ -115,8 +115,8 @@ const Dashboard = () => {
                     className='py-2 border-b border-richblack-700 cursor-pointer' 
                     onClick={() => handleTestClick(test.test_id)} // Call handleTestClick with test_id
                   >
-                    <p><strong>User Name:</strong> {test.user_name || 'N/A'}</p>
-                    <p><strong>Test Name:</strong> {test.test_name || 'N/A'}</p>
+                    <p className='text-blue-400'><strong className='text-pink-100'>User Name:</strong> <i>{test.user_name || 'N/A'}</i></p>
+                    <p className='text-blue-400'><strong className='text-pink-100'>Test Name:</strong> <i>{test.test_name || 'N/A'}</i></p>
                   </li>
                 ))}
               </ul>
@@ -128,7 +128,7 @@ const Dashboard = () => {
 
       </div>
 
-      <button onClick={() => navigate("/testinterface")} className='bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
+      <button onClick={() => navigate("/testinterface")} className='bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-1 w-[30rem] ml-[15rem] border-blue-50'>
         Create your own Test
       </button>
 
