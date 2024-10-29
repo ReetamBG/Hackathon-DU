@@ -17,7 +17,6 @@ def signup():
                           accountType=data['accountType'])
     print(user_data)
 
-
     # storing user_id as global variable dont ask me why or how and what ye kaam nahi kar raha dimaag kharab ho gaya hai
     pickle.dump(user_data['user_id'], open('user_id.pkl', 'wb'))
 

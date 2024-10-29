@@ -52,8 +52,8 @@ def get_ai_test():
     client = InferenceClient(api_key="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")
     qa_data= data['questions']
 
-    # Format the data as a prompt for the AI
-    messages = [{"role": "user", "content": "Replace the above questions with new ones with different options and provide them in JSON format with only the questions, options, and correct answers:"}]
+    # Prompt for AI
+    messages = [{"role": "user", "content": "change the questions so that the answers remain the same but the questions are different and provide them in JSON format with only the questions, options, and correct answers:"}]
     for item in qa_data:
         question_prompt = {
             "question": item["question"],
@@ -68,6 +68,8 @@ def get_ai_test():
         messages=messages,
         max_tokens=500
     )
+
+    json_output = None
 
     # Attempt to parse the response as JSON
     try:
@@ -87,10 +89,10 @@ def get_ai_test():
             # print(output_json)
             print(type(output_json))
 
-            #convert string to  object
+            # convert string to  object
             json_output = json.loads(output_json)
 
-            #check new data type
+            # check new data type
             print(type(json_output))
             print(json_output)
         else:
