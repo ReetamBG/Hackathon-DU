@@ -44,13 +44,13 @@ def get_ai_test():
     print('Request received on /api/getAiTest', data)
 
 
-
-    args = [{'correctAnswer': 'Delhi', 'options': {'A': 'Delhi', 'B': 'Guwahati', 'C': 'Pune', 'D': 'Bihar'}, 'question': 'What is the capital of India? '}, {'correctAnswer': 'Red Fort', 'options': {'A': 'Sanchi Stupa', 'B': 'Rang Ghar', 'C': 'Red Fort', 'D': 'Kamakhya Temple'}, 'question': 'What is a historical monument located in Delhi? '}, {'correctAnswer': 'Delhi', 'options': {'A': 'Assam', 'B': 'Delhi', 'C': 'Rajasthan', 'D': 'J&K'}, 'question': 'Which among the following is an Union Territory?'}]
+    #
+    # args = [{'correctAnswer': 'Delhi', 'options': {'A': 'Delhi', 'B': 'Guwahati', 'C': 'Pune', 'D': 'Bihar'}, 'question': 'What is the capital of India? '}, {'correctAnswer': 'Red Fort', 'options': {'A': 'Sanchi Stupa', 'B': 'Rang Ghar', 'C': 'Red Fort', 'D': 'Kamakhya Temple'}, 'question': 'What is a historical monument located in Delhi? '}, {'correctAnswer': 'Delhi', 'options': {'A': 'Assam', 'B': 'Delhi', 'C': 'Rajasthan', 'D': 'J&K'}, 'question': 'Which among the following is an Union Territory?'}]
 
 
 
     client = InferenceClient(api_key="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")
-    qa_data=args
+    qa_data= data['questions']
 
     # Format the data as a prompt for the AI
     messages = [{"role": "user", "content": "Replace the above questions with new ones with different options and provide them in JSON format with only the questions, options, and correct answers:"}]

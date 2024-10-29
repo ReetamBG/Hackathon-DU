@@ -93,7 +93,10 @@ const Questionpage = () => {
       const response = await axios.post('http://127.0.0.1:5000/api/getAiTest', {
           questions,  // Only sending the question text
       });
+      const filteredResponse = response.data;
+
       console.log(response.data);
+      navigate("/questionpage",{ state: { testResponse: filteredResponse } })
     } catch (error) {
       console.log("Error in getting response for ai:", error);
     }
