@@ -23,6 +23,7 @@ const Dashboard = () => {
     axios.post('http://127.0.0.1:5000/api/refreshTest', { userId })
       .then((response) => {
         setUserTests(response.data.test_list || []);
+        console.log("getting response for user tests",response.data)
         toast.success("User data refreshed successfully!");
       })
       .catch((error) => {
