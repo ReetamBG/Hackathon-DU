@@ -115,7 +115,7 @@ def fetch_test():
         cleaned_question_list = [q for q in question_list if q]
 
         json_response = {
-            'question_list': cleaned_question_list
+            'questions': cleaned_question_list
         }
 
         print("Generated JSON Response:", json_response)
