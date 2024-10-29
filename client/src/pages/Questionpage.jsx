@@ -52,20 +52,22 @@ const Questionpage = () => {
 
   const handleSubmitTest = () => {
     let calculatedScore = 0;
-
+  
     questions.forEach((question, index) => {
       const userAnswer = userAnswers[`question-${index}`];
       if (userAnswer === question.correctAnswer) {
         calculatedScore += 1;
       }
     });
-
+  
     setScore(calculatedScore);
     console.log('User Answers:', userAnswers);
     console.log('Score:', calculatedScore);
-
-    navigate("/scoreboard", { state: { score: calculatedScore } });
+  
+    // Pass score, userAnswers, and questions to the scoreboard
+    navigate("/scoreboard", { state: { score: calculatedScore, userAnswers, questions } });
   };
+  
 
   const currentQuestion = questions[currentQuestionIndex];
 

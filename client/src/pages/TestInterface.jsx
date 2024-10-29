@@ -78,14 +78,14 @@ const TestInterface = () => {
   return (
     <div className="text-white text-center mx-auto mt-[20rem]">
       <form onSubmit={handleSubmit} className='flex flex-col justify-between text-3xl gap-1'>
-        <label className='flex gap-3 text-center'>
-          Test Name:
+        <label className='flex gap-3 text-center text-ellipsis'>
+          TEST NAME:
           <input
             type="text"
             name="testName"
             value={formData.testName}
             onChange={handleInputChange}
-            className='rounded-[8px] text-black'
+            className='rounded-[8px] text-black w-full'
           />
         </label>
         <br />
