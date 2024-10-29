@@ -142,7 +142,7 @@ const Questionpage = () => {
       <div className='flex flex-col'>
       {hint && (
         <div className="mt-6 text-xl text-white">
-          <p><strong>Hint:</strong> {hint}</p>
+          <p><strong>Hint (AI Generated):</strong> {hint}</p>
         </div>
       )}
 
