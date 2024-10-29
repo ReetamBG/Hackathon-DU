@@ -100,35 +100,23 @@ def fetch_test():
         # Fetch the test data from the database
         test_data = db.get_test(test_id=test_id)
 
-        # Log the output to inspect its structure
-        print("Fetched test_data:", test_data)
-
+        # Check if the test data exists
         if test_data is None:
             return jsonify({"error": "Test not found"}), 404
 
-        # Check if test_data is a tuple
-        if isinstance(test_data, tuple):
-            # Log tuple structure
-            print("Tuple structure:", test_data)
+        # Parse and clean up the questions data
+        questions = test_data[2]
+        print('Data fetched from database:', questions)
 
-            # Access the elements of the tuple using indices
-            test_name = test_data[0]  # Adjust according to your database structure
-            questions_list = json.loads(test_data[1])  # Assuming the second element is the JSON string
-            user_id = test_data[2]  # Assuming the third element is the user ID
+        # Convert questions from JSON string to a Python list
+        question_list = json.loads(questions)
 
-            json_response = {
-                "testName": test_name,
-                "questions": questions_list,
-                "userId": user_id
-            }
-        else:
-            # Handle the case where test_data is a dictionary
-            questions_list = json.loads(test_data['test_data'])
-            json_response = {
-                "testName": test_data['test_name'],
-                "questions": questions_list,
-                "userId": test_data['user_id']
-            }
+        # Remove any empty or null items in the list
+        cleaned_question_list = [q for q in question_list if q]
+
+        json_response = {
+            'question_list': cleaned_question_list
+        }
 
         print("Generated JSON Response:", json_response)
         return jsonify(json_response), 200
@@ -136,6 +124,7 @@ def fetch_test():
     except Exception as e:
         print(f"Error occurred: {e}")
         return jsonify({"error": "An error occurred while fetching the test"}), 500
+
 
 
 
