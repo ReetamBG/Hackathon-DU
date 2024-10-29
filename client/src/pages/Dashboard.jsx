@@ -73,7 +73,7 @@ const Dashboard = () => {
       <h1 className='text-yellow-100 text-center'>
         Welcome to the Dashboard, {username}!
       </h1>
-      <div className='flex gap-[5rem] justify-evenly'>
+      <div className='flex gap-[5rem] justify-evenly w-full'>
         
         {/* Your Previous Test Data Panel */}
         <div className='bg-richblack-800 text-richblack-100 py-[8px] 

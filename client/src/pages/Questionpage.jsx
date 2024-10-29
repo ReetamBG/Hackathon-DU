@@ -73,7 +73,7 @@ const Questionpage = () => {
   const hinthandler = async () => {
     try {
       console.log(currentQuestion.question)
-      const response = await axios.post('/api/getHint', {
+      const response = await axios.post('http://127.0.0.1:5000/api/getHint', {
         questionText: currentQuestion.question,  // Only sending the question text
         
       });
