@@ -101,6 +101,10 @@ const Questionpage = () => {
           <p className='text-4xl'>Good Luck!!</p>
         </div>
       )}
+        <button className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
+          Take Your Test with AI
+        </button>
+
     </div>
   );
 };

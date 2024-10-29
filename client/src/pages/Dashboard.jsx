@@ -17,6 +17,11 @@ const Dashboard = () => {
     if (savedUsername) setUsername(savedUsername);
     if (savedUserId) setUserId(savedUserId);
   }, []);
+  useEffect(() => {
+      refreshAllTests();
+      refreshUserTests();
+    }, []);
+
 
   // Refresh handler for "Your Test Data" panel
   const refreshUserTests = () => {
@@ -126,6 +131,7 @@ const Dashboard = () => {
       <button onClick={() => navigate("/testinterface")} className='bg-yellow-50 rounded-[8px] font-medium text-richblack-900 px-[12px] py-[8px] mt-6'>
         Create your own Test
       </button>
+
     </div>
   );
 };
