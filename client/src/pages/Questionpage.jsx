@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 const Questionpage = () => {
   const location = useLocation();
@@ -11,6 +12,7 @@ const Questionpage = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [score, setScore] = useState(0);
+  const [hint, setHint] = useState("");  // State to store the hint response from the backend
 
   // Check if testResponse is valid
   if (!testResponse || !testResponse.questions || testResponse.questions.length === 0) {
@@ -37,34 +39,49 @@ const Questionpage = () => {
   const handleNextQuestion = () => {
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setHint("");  // Clear hint when moving to the next question
     }
   };
 
   const handlePreviousQuestion = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
+      setHint("");  // Clear hint when moving to the previous question
     }
   };
 
   const handleSubmitTest = () => {
     let calculatedScore = 0;
-  
+
     questions.forEach((question, index) => {
       const userAnswer = userAnswers[`question-${index}`];
       if (userAnswer === question.correctAnswer) {
         calculatedScore += 1;
       }
     });
-  
+
     setScore(calculatedScore);
     console.log('User Answers:', userAnswers);
     console.log('Score:', calculatedScore);
-  
+
     navigate("/scoreboard", { state: { score: calculatedScore } });
   };
-  
 
   const currentQuestion = questions[currentQuestionIndex];
+
+  // Handler function to fetch hint from the backend
+  const hinthandler = async () => {
+    try {
+      console.log(currentQuestion.question)
+      const response = await axios.post('/api/getHint', {
+        questionText: currentQuestion.question,  // Only sending the question text
+        
+      });
+      setHint(response.data.hint);  // Display hint from the backend response
+    } catch (error) {
+      console.error("Error fetching hint:", error);
+    }
+  };
 
   return (
     <div className="text-white text-center mx-auto mt-2">
@@ -95,16 +112,23 @@ const Questionpage = () => {
       <button onClick={handleSubmitTest} className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
         Submit Test
       </button>
+
+      {hint && (
+        <div className="mt-6 text-xl text-white">
+          <p><strong>Hint:</strong> {hint}</p>
+        </div>
+      )}
+
       {score !== null && (
-        <div className=" text-2xl flex flex-col gap-5 mt-7">
+        <div className="text-2xl flex flex-col gap-5 mt-7">
           <p>The Total Number of Questions available are : <b>{questions.length}</b></p>
           <p className='text-4xl'>Good Luck!!</p>
         </div>
       )}
-        <button className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
-          Take Your Test with AI
-        </button>
 
+      <button onClick={hinthandler} className="mt-6 bg-yellow-50 text-richblack-900 rounded-[8px] px-4 py-2">
+        Get Hint
+      </button>
     </div>
   );
 };
