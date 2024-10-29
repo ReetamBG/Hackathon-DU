@@ -51,7 +51,7 @@ const Dashboard = () => {
     console.log("the test id i am sending is",{test_id})
     axios.post('http://127.0.0.1:5000/api/getTestById', { test_id })
       .then((response) => {
-        const filteredResponse = response.data;
+        const filteredResponse = response.data.question_list;
         // Navigate to questionPage with testResponse as state
         navigate("/questionpage", { state: { testResponse: filteredResponse } });
         console.log("this is the response from all test data:",response.data)
