@@ -54,6 +54,8 @@ const Dashboard = () => {
         const filteredResponse = response.data;
         // Navigate to questionPage with testResponse as state
         navigate("/questionpage", { state: { testResponse: filteredResponse } });
+        console.log("this is the response from all test data:",response.data)
+
       })
       .catch((error) => {
         console.error('Error fetching test data:', error);
