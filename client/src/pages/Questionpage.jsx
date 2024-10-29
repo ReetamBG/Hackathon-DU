@@ -77,7 +77,7 @@ const Questionpage = () => {
         questionText: currentQuestion.question,  // Only sending the question text
         
       });
-      console.log(response.data.hint)
+      console.log(response.data)
       setHint(response.data?.hint);  // Display hint from the backend response
     } catch (error) {
       console.error("Error fetching hint:", error);
