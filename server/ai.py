@@ -8,7 +8,7 @@ ai_bp = Blueprint('ai', __name__)
 @ai_bp.route('/api/getHint', methods=['POST'])
 def get_hint():
     data = request.get_json()
-    hint = data.get('questionText')
+    hint = 'hello'
     print(f"Request received on /api/getHint", data)
     json_response = {
         'hint': hint
